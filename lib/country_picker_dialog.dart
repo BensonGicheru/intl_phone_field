@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/helpers.dart';
+import 'package:intl_phone_field/textformfield_wrapper.dart';
 
 class PickerDialogStyle {
   final Color? backgroundColor;
@@ -99,21 +100,23 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
           children: <Widget>[
             Padding(
               padding: widget.style?.searchFieldPadding ?? const EdgeInsets.all(0),
-              child: TextField(
-                style: widget.style?.searchFieldTextStyle ?? TextStyle(),
-                cursorColor: widget.style?.searchFieldCursorColor,
-                decoration: widget.style?.searchFieldInputDecoration ??
-                    InputDecoration(
-                      suffixIcon: const Icon(Icons.search),
-                      labelText: widget.searchText,
-                    ),
-                onChanged: (value) {
-                  _filteredCountries = widget.countryList.stringSearch(value)
-                    ..sort(
-                      (a, b) => a.localizedName(widget.languageCode).compareTo(b.localizedName(widget.languageCode)),
-                    );
-                  if (mounted) setState(() {});
-                },
+              child: TextFormFieldWrapper(
+                  textFormField: TextFormField(
+                    style: widget.style?.searchFieldTextStyle ?? const TextStyle(),
+                    cursorColor: widget.style?.searchFieldCursorColor,
+                    decoration: widget.style?.searchFieldInputDecoration ??
+                        InputDecoration(
+                          suffixIcon: const Icon(Icons.search),
+                          labelText: widget.searchText,
+                        ),
+                    onChanged: (value) {
+                      _filteredCountries = widget.countryList.stringSearch(value)
+                        ..sort(
+                              (a, b) => a.localizedName(widget.languageCode).compareTo(b.localizedName(widget.languageCode)),
+                        );
+                      if (mounted) setState(() {});
+                    },
+                  )
               ),
             ),
             const SizedBox(height: 20),
