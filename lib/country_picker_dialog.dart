@@ -27,6 +27,8 @@ class PickerDialogStyle {
 
   final double? width;
 
+  final GlobalKey? dialogKey;
+
   PickerDialogStyle({
     this.backgroundColor,
     this.countryCodeStyle,
@@ -39,6 +41,7 @@ class PickerDialogStyle {
     this.searchFieldInputDecoration,
     this.searchFieldPadding,
     this.width,
+    this.dialogKey
   });
 }
 
@@ -88,6 +91,7 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
     const defaultHorizontalPadding = 40.0;
     const defaultVerticalPadding = 24.0;
     return Dialog(
+      key: widget.style?.dialogKey,
       insetPadding: EdgeInsets.symmetric(
           vertical: defaultVerticalPadding,
           horizontal: mediaWidth > (width + defaultHorizontalPadding * 2)
